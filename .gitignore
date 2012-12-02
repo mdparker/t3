@@ -1,0 +1,5 @@
+build.obj
+build.exe
+build
+*.dll
+bin/t3*
