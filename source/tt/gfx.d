@@ -109,7 +109,7 @@ void renderEnd()
     SDL_RenderPresent(_renderer);
 }
 
-void renderBoard(ubyte[] board)
+void renderBoard(const ubyte[] board)
 {
     SDL_RenderCopy(_renderer, _board.tex, null, null);
 
