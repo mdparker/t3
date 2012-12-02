@@ -204,15 +204,27 @@ class Game
             if(_board.set(index, activePlayer._mark))
             {
                 play(Sound.Click);
-                if(_board.isOpen)
-                    activePlayer =(activePlayer == _p1) ? _p2 : _p1;
-                else if(_board.isWin)
+
+                // This is a good place to demonstrate a final switch. When switching on
+                // enum members, adding 'final' to the switch statement indicates that you
+                // are casing every member of the enum. If you forget one, you'll get an
+                // error. Very handy in case you add bew members to an enum over time and
+                // forget to update a switch statement somewhere.
+                final switch(_board.state)
                 {
-                    writefln("%s wins!", activePlayer._name);
-                    _board.flash(300, activePlayer._mark);
+                    case Board.State.Open:
+                        activePlayer =(activePlayer == _p1) ? _p2 : _p1;
+                        break;
+
+                    case Board.State.Win:
+                        writefln("%s wins!", activePlayer._name);
+                        _board.flash(300, activePlayer._mark);
+                        break;
+
+                    case Board.State.Draw:
+                        writeln("It's a draw!");
+                        break;
                 }
-                else if(_board.isDraw)
-                    writeln("It's a draw!");
             }
             else
                 play(Sound.Buzzer);
