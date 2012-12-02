@@ -2,10 +2,6 @@ module tt.main;
 
 private
 {
-	import core.runtime;
-	import std.conv;
-	import std.path;
-
 	import derelict.sdl2.sdl;
 	import derelict.sdl2.image;
 
