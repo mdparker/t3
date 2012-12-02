@@ -3,9 +3,9 @@ t3
 
 A simple TicTacToe game written with the D programming language.
 
-This game serves as a simple of example of two things, programming with the D Programming Language and how to use the Derelict 3 bindings. None of the more advanced features of D, such as templates or ranges, are used. Instead, basic features such as foreach loops and module-level 'friends' are demonstrated.
+This game serves as a simple example of two things, programming with the D Programming Language and how to use the Derelict 3 bindings. None of the more advanced features of D, such as templates or ranges, are used. Instead, basic features such as foreach loops and module-level 'friends' are demonstrated.
 
-Those new to the D Programming Language may want to play around this as a start and add AI, networking, or other features to enhance the basic game. The code is currently uncommented, as I am notoriously bad at not commenting my code. I intend to correct that in the future, with comments highlighting some of the D features that I wanted to demonstrate. Until then, please make do.
+Those new to the D Programming Language may want to play around with this as a start and add AI, networking, or other features to enhance the basic game. The code is currently uncommented, as I am notoriously bad at not commenting my code. I intend to correct that in the future, with comments highlighting some of the D features that I wanted to demonstrate. Until then, please make do.
 
 I created the graphics myself and you may use them as you see fit. The audio files were downloaded from Freesound.org, specifically from these links:
 
