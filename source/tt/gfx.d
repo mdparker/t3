@@ -97,6 +97,9 @@ void gfxTerm()
         SDL_DestroyWindow(_window);
         _window = null;
     }
+
+    if(DerelictSDL2.isLoaded)
+        SDL_Quit();
 }
 
 void renderBegin()
