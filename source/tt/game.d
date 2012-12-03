@@ -1,28 +1,64 @@
+/**
+This module handles updating of the game board, management of player turns and determination
+of a game's outcome.
+*/
 module tt.game;
 
-import std.stdio;
+// It's worth noting that module imports are private by default, but I always
+// wrap them in a block like this. Personal taste.
+private
+{
+    // I use std.stdio.writeln/writefln to output text to the console. It would be a good exercise
+    // to remove the system console and draw text output in the window, perhaps using SDL_ttf, or
+    // maybe AngelCode fonts.
+    import std.stdio;
 
-import tt.audio;
-import tt.config;
-import tt.gfx;
+    // This module also manages sound effects, hence tt.audio here.
+    import tt.audio;
+    import tt.config;
+    import tt.gfx;
+}
 
 private
 {
+    // Represents the 9 squares of a TicTacToe game board.
     struct Board
     {
+        // The three possible values of the current state of a game. This might be better
+        // outside of the Board struct. Then in the game class, the following form could
+        // be used to test the state: if(board.state == State.Win). As is, it would have
+        // to be used like so: if(board.state == Board.State.Win). Instead, I've opted to
+        // keep it here inside board and added three convenient property functions below
+        // just for kicks. Some may argue that this shouldn't be part of the board anyway,
+        // that the board should just be data and the game class should manage the state.
+        // That's understandable, conceptually. But practically, it looks cleaner to me
+        // to keep it out of the game class.
         enum State
         {
-            Open,
-            Win,
-            Draw
+            Open,   // The game is still being played.
+            Win,    // One of the players has one the game.
+            Draw    // The game ended in a draw (tie).
         }
 
+        // The 9 squares of the board, default initialized to 0. The Board.clear must
+        // be called before it can be used.
         ubyte[9] squares;
-        size_t[3] three;
+
+        // The current state of the game board.
         State state;
+
+        // The three array holds the indices of a winning three in a row. This is used so that
+        // those indices can be turned on an off to flash the Xs or Os in those slots as feedback
+        // for the win. flashTime controls the duration of the blinking on and off, and flashOn
+        // indicates, when true, that effect is active.
+        size_t[3] three;
         uint flashTime;
         bool flashOn;
 
+        // Convenience properties to determine the current state of the board. This allows the
+        // following usage in the game class: if(board.isOpen) as opposed to if(board.state == Board.State.Open).
+        // A simple exercise could be to remove these three properties and modify the code such
+        // that the tests in game become: if(board.state == State.Open).
         bool isOpen() @property
         {
             return state == State.Open;
@@ -38,6 +74,8 @@ private
             return state == State.Draw;
         }
 
+        // Called by the Game class to set the value of the given index in the board array to
+        // an X or O mark.
         bool set(int index, ubyte mark)
         {
             if(squares[index] != NoMark)
@@ -50,6 +88,7 @@ private
             }
         }
 
+        // Called by set to determine if the last move ended the game.
         void updateState(ubyte mark)
         {
             checkWin(mark);
@@ -57,6 +96,7 @@ private
                 checkDraw();
         }
 
+        // Called by updateState to determine if the last move won the game.
         void checkWin(ubyte mark)
         {
             // First, check each row, left->right.
@@ -103,6 +143,7 @@ private
             }
         }
 
+        // Called by update state to determine if the last move caused the game to end in a tie.
         void checkDraw()
         {
             int count;
@@ -115,6 +156,8 @@ private
                 state = State.Draw;
         }
 
+        // Called by the Game class to turn the winning squares on and off so that the Xs or Os they
+        // contain flash on screen.
         void flash(uint delta, ubyte mark)
         {
             flashTime += delta;
@@ -138,6 +181,7 @@ private
             }
         }
 
+        // Sets the board members into a state suitable for a new game.
         void clear()
         {
             squares[] = NoMark;
@@ -148,12 +192,24 @@ private
     }
 }
 
+/**
+This abstract class is used by the game to execute moves each turn.
+
+Player is intended to be subclassed to provide for different types of game play, such as 1-on-1 on the
+same computer (HumanPlayer vs HumanPlayer), 1-on-1 over a network (NetworkPlayer vs NetworkPlayer), or
+single player vs. AI (HumanPlayer vs AIPlayer), with multiple possibilities for AI (smart, dumb, easy, hard).
+Currently, only the HumanPlayer is implemented. Other player types could be implemented as an exercise.
+*/
 abstract class Player
 {
     public
     {
+        // Called once per frame by the game class on the currently active player until a move
+        // is made. Implementations should call game.setActiveMark to update the board with
+        // this player's mark.
         abstract void update();
 
+        // Returns true if this player is the currently active player.
         final bool isActive() @property
         {
             return _active;
@@ -170,16 +226,25 @@ abstract class Player
 
     private
     {
-        ubyte _mark;
-        string _name;
+        ubyte _mark;        // X or O
+        string _name;       // The name displayed in text output ("Player1", "Computer", etc...)
         bool _active;
     }
 }
 
+/**
+Manages all aspects of the game itself.
+
+Manages the game board, plays sounds when the board is updated, keeps track of the active player.
+All updates to the game board must *must* go through this class (the setActiveMark method).
+*/
 class Game
 {
     public
     {
+        /**
+        Sets up a new game between the two given players.
+        */
         this(Player p1, Player p2)
         {
             _p1 = p1;
@@ -187,6 +252,10 @@ class Game
             reset();
         }
 
+        /**
+        Calls the update method of the active player and, if there is a winner, updates the blinking
+        board animation with the given time delta.
+        */
         void update(uint delta)
         {
             activePlayer.update();
@@ -194,15 +263,22 @@ class Game
                 _board.flash(delta, activePlayer._mark);
         }
 
+        /**
+        Draws the game board and all the Xs and Os.
+        */
         void render()
         {
             renderBoard(_board.squares);
         }
 
+        /**
+        Updates the given index of the board with the active player's mark.
+        */
         void setActiveMark(uint index)
         {
             if(_board.set(index, activePlayer._mark))
             {
+                // A successful update results in a click sound.
                 play(Sound.Click);
 
                 // This is a good place to demonstrate a final switch. When switching on
@@ -227,11 +303,17 @@ class Game
                 }
             }
             else
+                // Trying to update a square that already contains a mark earns a buzzer.
                 play(Sound.Buzzer);
         }
 
+        /**
+        Set up the next round of the game based on the outcome of the previous round (if any).
+        */
         void reset()
         {
+            // If the active player won the last round, that player contiues to be active. If the
+            // O player was the winner, swap marks. X always goes first each round.
             if(_board.isWin)
             {
                 if(activePlayer._mark == OMark)
@@ -243,6 +325,8 @@ class Game
                         _p1._mark = OMark;
                 }
             }
+
+            // In case of a draw, swap the active player.
             else if(_board.isDraw)
             {
                 if(_p1._mark == XMark)
@@ -258,6 +342,9 @@ class Game
                     activePlayer = _p1;
                 }
             }
+
+            // In the dedault case (no previous round) the player designated by the constructor
+            // as Player1 goes first.
             else
             {
                 activePlayer = _p1;
@@ -268,6 +355,9 @@ class Game
             _board.clear();
         }
 
+        /**
+        Returns true if the current round has ended in win or a tie.
+        */
         bool over() @property
         {
             return !_board.isOpen;
