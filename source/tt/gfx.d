@@ -183,7 +183,7 @@ void renderBoard(const ubyte[] board)
     // given, this would be it. When two are given, the first, in this case i, is inferred to
     // be the array index of the second value. It's equivalent to the following for loop:
     // for(int i=0; i<board.length; ++i) { ubyte mark = board[i]; }
-    foreach(i, mark; board)
+    foreach(int i, mark; board)
     {
         if(mark == XMark || mark == OMark)
         {

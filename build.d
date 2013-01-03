@@ -44,6 +44,7 @@ version(DigitalMars)
     {
         string options = releaseOptions;
         if(isDebug) options = debugOptions;
+        version(Posix) options ~= " -L-ldl";
         return format("dmd %s -Iimport%s -of%s\\%s", options, files, outdir, name);
     }
 }
