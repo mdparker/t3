@@ -10,21 +10,23 @@ I created the graphics myself and you may use them as you see fit. The audio fil
 "buzzer.wav" - http://www.freesound.org/people/guitarguy1985/sounds/54047/
 "mouse click.wav" http://www.freesound.org/people/THE_bizniss/sounds/39562/
 
-To compile the game, first compile the build script with your D compiler (currently, only DMD is supported), then
-execute the resulting executable.
+To compile the game, you will need to download and install [dub](https://github.com/rejectedsoftware/dub). With both dub and a D compiler on your path, you can execute the following command to compile.
 
 ```
 cd t3
-dmd build
-./build
+dub build
 ```
 
-To run the game you will need the shared libraries SDL2, SDL2_image, and SDL2_mixer on your system path. Linux and Mac users will need to compile the libraries. Because they are still pre-release, it is quite possible that the Derelict binding here in the import directory will fall behind (particularly with SDL2). If the shared library you build doesn't work with the current binding, or the binding has missing functionality, please report it and I'll get things up to date. Windows users can download all three precompiled DLLs from the Derelict 3 download page.
+This will create an executable called 't3' in the t3\bin subdirectory. By default, dub will use DMD, but you can specify other compilers on the command line. Execute 'dub --help' for details.
 
-https://github.com/aldacron/Derelict3/downloads
+To run the game you will need the shared libraries SDL2 and SDL2_image on your system path (or in the t3/bin subdirectory). SDL2_mixer is optional, but without it there will be no sound effects. You can download binaries and source from the following links.
 
-Pull requests with new game features will likely not be accepted. I would like to keep this simple and useful as a toy for new D users. I might very well create a branch with multiplayer and AI for myself to play around with, but I really want to keep the master as-is. However, I'll happily accept pull requests for bug fixes and improvements to the build script (gdc & ldc support, for example).
+[SDL2](http://www.libsdl.org/tmp/download-2.0.php)
+[SDL2_image](http://www.libsdl.org/tmp/SDL_image/)
+[SDL2_mixer](http://www.libsdl.org/tmp/SDL_mixer/)
 
-I've created a forum at my personal website where you can come and discuss this project, if you'd like. You can find it at http://dblog.aldacron.net/forum/index.php?board=4.0. I expect that anyone new to D may have questions or encounter difficulties, so if you fall into that category and have problems doing something with this specific codebase, feel free to drop on in and ask a question. I don't promise a prompt reply, so you'd be better off taking general D questions to the D newsgroups via either a newsreader or the web interface at http://forum.dlang.org/.
+Pull requests with new game features will likely not be accepted. I would like to keep this simple and useful as a toy for new D users. However, I'll happily accept pull requests for bug fixes.
+
+I've created a forum at my personal website where you can come and discuss this project, if you'd like. You can find it at http://dblog.aldacron.net/forum/index.php?board=4.0 (if you have problems getting through the security questions to create a forum membership, you contact me directly for help). I expect that anyone new to D may have questions or encounter difficulties, so if you fall into that category and have problems doing something with this specific codebase, feel free to drop on in and ask a question. I don't promise a prompt reply, so you'd be better off taking general D questions to the D newsgroups via either a newsreader or the web interface at http://forum.dlang.org/.
 
 I hope someone finds this helpful.
