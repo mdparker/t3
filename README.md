@@ -17,13 +17,13 @@ cd t3
 dub build
 ```
 
-This will create an executable called 't3' in the t3\bin subdirectory. By default, dub will use DMD, but you can specify other compilers on the command line. Execute 'dub --help' for details.
+This will create an executable called 't3' in the t3\bin subdirectory. By default, dub will use DMD, but you can specify other compilers on the command line. Also, dub will build a debug mode executable by default. You can specify other modes on the command line. Execute 'dub --help' for details.
 
 To run the game you will need the shared libraries SDL2 and SDL2_image on your system path (or in the t3/bin subdirectory). SDL2_mixer is optional, but without it there will be no sound effects. You can download binaries and source from the following links.
 
-[SDL2](http://www.libsdl.org/tmp/download-2.0.php)
-[SDL2_image](http://www.libsdl.org/tmp/SDL_image/)
-[SDL2_mixer](http://www.libsdl.org/tmp/SDL_mixer/)
+[SDL2](http://www.libsdl.org/download-2.0.php)
+[SDL2_image](http://www.libsdl.org/projects/SDL_image/)
+[SDL2_mixer](http://www.libsdl.org/projects/SDL_mixer/)
 
 Pull requests with new game features will likely not be accepted. I would like to keep this simple and useful as a toy for new D users. However, I'll happily accept pull requests for bug fixes.
 
