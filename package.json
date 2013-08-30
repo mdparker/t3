@@ -8,6 +8,6 @@
     "targetPath": "bin",
 
     "dependencies": {
-        "derelict:sdl2": "~master"
+        "derelict-sdl2": "~master"
     }
 }
