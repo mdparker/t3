@@ -1,0 +1,13 @@
+{
+    "name": "t3",
+    "description": "A simple Tic-Tac-Toe game. An example of using the D Programming Language.",
+    "homepage": "none",
+    "copyright": "Copyright © 2013 Michael D. Parker",
+    "authors": [ "Michael D. Parker" ],
+
+    "targetPath": "bin",
+
+    "dependencies": {
+        "derelict:sdl2": "~master"
+    }
+}
