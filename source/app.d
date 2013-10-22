@@ -208,6 +208,17 @@ private
                         case SDLK_KP_7: _keyboardPlayer.nextIndex = 0; break;
                         case SDLK_KP_8: _keyboardPlayer.nextIndex = 1; break;
                         case SDLK_KP_9: _keyboardPlayer.nextIndex = 2; break;
+                        
+                        // Also bind qwe/asd/zxc for _keyboardPlayer for keyboards without a keypad.
+                        case SDLK_q: _keyboardPlayer.nextIndex = 0; break;
+                        case SDLK_w: _keyboardPlayer.nextIndex = 1; break;
+                        case SDLK_e: _keyboardPlayer.nextIndex = 2; break;
+                        case SDLK_a: _keyboardPlayer.nextIndex = 3; break;
+                        case SDLK_s: _keyboardPlayer.nextIndex = 4; break;
+                        case SDLK_d: _keyboardPlayer.nextIndex = 5; break;
+                        case SDLK_z: _keyboardPlayer.nextIndex = 6; break;
+                        case SDLK_x: _keyboardPlayer.nextIndex = 7; break;
+                        case SDLK_c: _keyboardPlayer.nextIndex = 8; break;
 
                         // This key is used to reset the game board to its original state. Always make
                         // the call when the key is pressed and let the game decide whether or not it
