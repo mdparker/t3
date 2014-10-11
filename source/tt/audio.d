@@ -73,9 +73,10 @@ void audioInit()
 
 void audioTerm()
 {
-    // audioTerm is always called, even if the shared library were never loaded. This
+    // audioTerm is always called, even if the shared library was never loaded. This
     // check ensures that any Mix_* functions called here were actually loaded. Without
-    // this, the calls below could potentially be using null funciton pointers.
+    // this, the calls below could potentially be using null funciton pointers, which
+    // would cause a crash when the game exits.
     if(!DerelictSDL2Mixer.isLoaded) return;
 
     foreach(sound; _sounds)

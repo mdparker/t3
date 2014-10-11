@@ -3,7 +3,7 @@ module tt.gfx;
 private
 {
     // In every D program, the path to the executable is passed to the main function in
-    // args[0]. But a D program's main funciton is called not from the OS, but by the
+    // args[0]. But a D program's main function is called not from the OS, but by the
     // D runtime, where the real entry point (an extern(C) main) is to be found. As it
     // happens, the runtime stores the args before passing them off to the D main. They
     // can be retrieved via Runtime.args found in core.runtime. This module uses Runtime.args[0]
@@ -38,7 +38,7 @@ private
     Texture _board;
     Texture[2] _xo;
 
-    // This is a simple wrapper for loading and unload SDL textures. This isn't a necessity, but makes
+    // This is a simple wrapper for loading and unloading SDL textures. This isn't a necessity, but makes
     // for cleaner code below.
     struct Texture
     {
@@ -80,9 +80,9 @@ private
 */
 void gfxInit()
 {
-    // Notice than for all of these function calls I'm throwing Errors on failure rather than
+    // Notice that for all of these function calls I'm throwing Errors on failure rather than
     // Exceptions. This is because I have no intention of catching them. Much like Java's
-    // RuntimeException, D's Error class indicates a fatal, unrecoverable error and that
+    // RuntimeException, D's Error class indicates a fatal, unrecoverable error that
     // is not intended to be handled. It can be caught, but it is expected that the app will
     // still exit after manipulating the Error instance. Since this is a game and not a library,
     // and I know for sure that I am not recovering from any failures here, I've used Error to
@@ -142,7 +142,7 @@ void gfxTerm()
     // never be run if the library fails to load. Derelict throws an Exception in that case, and in
     // tt.main.init I let that go without catching it, so the app will exit. However, the scope(exit) in
     // tt.main.init ensures that tt.main.term is always called, and tt.main.term always calls gfxTerm.
-    // So it is possible that SDL_Quit will be null when this part is reaches. The call to
+    // So it is possible that SDL_Quit will be null when this part is reached. The call to
     // DerelictSDL2.isLoaded ensures that SDL_Quit will not be called if the library was never loaded.
     // This is an important consideration when you do this sort of lifecycle management with a Derelict
     // program. There are other ways to handle this (such as not calling term when a lib fails to load),

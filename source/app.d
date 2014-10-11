@@ -2,7 +2,7 @@
 Provides the main entry point, intialization and shutdown, and control of the game flow.
 
 This module provides the basic lifecycle of the game. On startup, required libraries are loaded and
-then modules which required initialization are intiialized. Then the game loop is entered. All input
+then modules which require initialization are intiialized. Then the game loop is entered. All input
 is processed in this module. When the game loop exits, each module's termination function is called
 and the app exits.
 
@@ -194,7 +194,7 @@ private
                 case SDL_KEYUP:
                     switch(event.key.keysym.sym)
                     {
-                        // Keypad key 1 - 9 are used to _keyboardPlayer to represent the 9 squares
+                        // Keypad keys 1 - 9 are used to _keyboardPlayer to represent the 9 squares
                         // on the board. Keys 7-9 are the top row (array indices 0-2), keys 4-5 are the
                         // middle row (indices 3-5), and keys 1-3 are the bottom row (indices 6-8).
                         // Always send the index to _keyboardPlayer and let it decide to accept or
@@ -208,7 +208,7 @@ private
                         case SDLK_KP_7: _keyboardPlayer.nextIndex = 0; break;
                         case SDLK_KP_8: _keyboardPlayer.nextIndex = 1; break;
                         case SDLK_KP_9: _keyboardPlayer.nextIndex = 2; break;
-                        
+
                         // Also bind qwe/asd/zxc for _keyboardPlayer for keyboards without a keypad.
                         case SDLK_q: _keyboardPlayer.nextIndex = 0; break;
                         case SDLK_w: _keyboardPlayer.nextIndex = 1; break;

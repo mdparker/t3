@@ -36,11 +36,11 @@ private
         enum State
         {
             Open,   // The game is still being played.
-            Win,    // One of the players has one the game.
+            Win,    // One of the players has won the game.
             Draw    // The game ended in a draw (tie).
         }
 
-        // The 9 squares of the board, default initialized to 0. The Board.clear must
+        // The 9 squares of the board, default initialized to 0. Board.clear must
         // be called before it can be used.
         ubyte[9] squares;
 
@@ -48,9 +48,9 @@ private
         State state;
 
         // The three array holds the indices of a winning three in a row. This is used so that
-        // those indices can be turned on an off to flash the Xs or Os in those slots as feedback
+        // those indices can be turned on and off to flash the Xs or Os in those slots as feedback
         // for the win. flashTime controls the duration of the blinking on and off, and flashOn
-        // indicates, when true, that effect is active.
+        // indicates, when true, that the effect is active.
         size_t[3] three;
         uint flashTime;
         bool flashOn;
@@ -91,6 +91,10 @@ private
         // Called by set to determine if the last move ended the game.
         void updateState(ubyte mark)
         {
+            // As an exercise, eliminate the checkDraw method entirely and only
+            // call checkWin when the minimum number of moves required
+            // (that would be 5) have been made. Doing both would only need a single
+            // variable to be updated on every move and reset to 0 on every new game.
             checkWin(mark);
             if(state == State.Open)
                 checkDraw();
@@ -236,7 +240,7 @@ abstract class Player
 Manages all aspects of the game itself.
 
 Manages the game board, plays sounds when the board is updated, keeps track of the active player.
-All updates to the game board must *must* go through this class (the setActiveMark method).
+All updates to the game board *must* go through this class (the setActiveMark method).
 */
 class Game
 {
@@ -284,7 +288,7 @@ class Game
                 // This is a good place to demonstrate a final switch. When switching on
                 // enum members, adding 'final' to the switch statement indicates that you
                 // are casing every member of the enum. If you forget one, you'll get an
-                // error. Very handy in case you add bew members to an enum over time and
+                // error. Very handy in case you add new members to an enum over time and
                 // forget to update a switch statement somewhere.
                 final switch(_board.state)
                 {
@@ -308,11 +312,11 @@ class Game
         }
 
         /**
-        Set up the next round of the game based on the outcome of the previous round (if any).
+        Sets up the next round of the game based on the outcome of the previous round (if any).
         */
         void reset()
         {
-            // If the active player won the last round, that player contiues to be active. If the
+            // If the active player won the last round, that player continues to be active. If the
             // O player was the winner, swap marks. X always goes first each round.
             if(_board.isWin)
             {
@@ -343,7 +347,7 @@ class Game
                 }
             }
 
-            // In the dedault case (no previous round) the player designated by the constructor
+            // In the default case (no previous round) the player designated by the constructor
             // as Player1 goes first.
             else
             {
