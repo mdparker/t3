@@ -290,18 +290,21 @@ class Game
                 // are casing every member of the enum. If you forget one, you'll get an
                 // error. Very handy in case you add new members to an enum over time and
                 // forget to update a switch statement somewhere.
-                final switch(_board.state)
+                // To make it even more convenient in this particular case, the with statement
+                // in front of the final switch allows me to refer to the enum fields
+                // without using the fully qualified name, e.g. Open rather than Board.State.Open.
+                with( Board.State ) final switch(_board.state)
                 {
-                    case Board.State.Open:
+                    case Open:
                         activePlayer =(activePlayer == _p1) ? _p2 : _p1;
                         break;
 
-                    case Board.State.Win:
+                    case Win:
                         writefln("%s wins!", activePlayer._name);
                         _board.flash(300, activePlayer._mark);
                         break;
 
-                    case Board.State.Draw:
+                    case Draw:
                         writeln("It's a draw!");
                         break;
                 }
