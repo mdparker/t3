@@ -7,8 +7,8 @@ This game serves as a simple example of two things, programming with the D Progr
 
 I created the graphics myself and you may use them as you see fit. The audio files were downloaded from Freesound.org, specifically from these links:
 
--"buzzer.wav" - http://www.freesound.org/people/guitarguy1985/sounds/54047/
--"mouse click.wav" http://www.freesound.org/people/THE_bizniss/sounds/39562/
+* "buzzer.wav" - http://www.freesound.org/people/guitarguy1985/sounds/54047/
+* "mouse click.wav" http://www.freesound.org/people/THE_bizniss/sounds/39562/
 
 To compile the game, you will need to download and install [DUB][2]. With both DUB and a D compiler on your path, you can execute the following commands to compile the executable.
 
@@ -28,9 +28,9 @@ dub
 
 To run the game you will need the shared libraries SDL2 and SDL2_image on your system path (or in the t3/bin subdirectory). SDL2_mixer is optional, but without it there will be no sound effects. You can download binaries and source from the following links.
 
--[SDL2][3]
--[SDL2_image][4]
--[SDL2_mixer][5]
+* [SDL2][3]
+* [SDL2_image][4]
+* [SDL2_mixer][5]
 
 Pull requests with new game features will likely not be accepted. I would like to keep this simple and useful as a toy for new D users. However, I'll happily accept pull requests for bug fixes.
 
